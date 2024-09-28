@@ -22,8 +22,7 @@ Take user input (a prompt) and return McQ based on grade, subject, subtopic and 
 1. **Clone the repository**:
 
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone <https://github.com/binisha-banjara/GENAI-API>
    
 2. **Set up a virtual environment**:
     ```bash
