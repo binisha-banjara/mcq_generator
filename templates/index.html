@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Generate Multiple-Choice Questions (MCQs)</h2>
+        <form id="mcq-form">
+            <label for="grade">Grade:</label>
+            <input type="text" id="grade" name="grade" required>
+            <br>
+
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+            <br>
+
+            <label for="subtopic">Subtopic:</label>
+            <input type="text" id="subtopic" name="subtopic" required>
+            <br>
+
+            <label for="num_questions">Number of Questions:</label>
+            <input type="number" id="num_questions" name="num_questions" required>
+            <br>
+
+            <button type="submit">Generate MCQs</button>
+        </form>
+
+        <h3>Generated MCQs:</h3>
+        <div id="mcq-output"></div>
+    </div>
+
+    <script>
+        document.getElementById('mcq-form').onsubmit = function (e) {
+            e.preventDefault();
+            let grade = document.getElementById('grade').value;
+            let subject = document.getElementById('subject').value;
+            let subtopic = document.getElementById('subtopic').value;
+            let num_questions = document.getElementById('num_questions').value;
+
+            fetch('/generate_mcqs', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `grade=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subject)}&subtopic=${encodeURIComponent(subtopic)}&num_questions=${encodeURIComponent(num_questions)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('mcq-output').innerHTML = `<pre>${data.mcqs}</pre>`;
+                });
+        };
+    </script>
+</body>
+
+</html>
